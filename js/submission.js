@@ -547,45 +547,6 @@
   }
 
   // =============================================
-  // RESET FORM (Submit Another Case)
-  // =============================================
-  window.resetForm = function () {
-    // Reset form fields
-    if (els.form()) els.form().reset();
-
-    // Clear state
-    state.currentStep = 1;
-    state.selectedType = null;
-    state.formData = {};
-    state.isSubmitting = false;
-
-    // Remove selected card styling
-    els.typeCards().forEach(function (card) {
-      card.classList.remove('selected');
-    });
-
-    // Remove checked agreement styling
-    $$('.agreement-item').forEach(function (item) {
-      item.classList.remove('checked', 'error');
-    });
-
-    // Clear guideline section
-    if (els.guidelineSection()) els.guidelineSection().innerHTML = '';
-
-    // Hide "other" description
-    if (els.otherGroup()) els.otherGroup().style.display = 'none';
-
-    // Clear error states
-    $$('.form-error').forEach(function (el) { el.classList.remove('show'); });
-    $$('.form-input.error').forEach(function (el) { el.classList.remove('error'); });
-
-    // Go to step 1
-    renderStep(1);
-
-    showToast('Form has been reset. You can start a new submission.', 'info');
-  };
-
-  // =============================================
   // START
   // =============================================
   if (document.readyState === 'loading') {
