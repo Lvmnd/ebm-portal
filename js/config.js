@@ -45,6 +45,29 @@ const GOOGLE_FORM_LINKS = {
 };
 
 /**
+ * Google Form Field Entry IDs — for prefilling doctor name into the form.
+ * This eliminates the need for doctors to enter their name twice.
+ *
+ * How to get entry IDs:
+ * 1. Open your Google Form → click ⋮ → "Get pre-filled link"
+ * 2. Fill in the doctor name field with anything
+ * 3. Click "Get Link" and copy the URL
+ * 4. Extract the entry.XXXXXXXXX value after the field value
+ *    Example: ?entry.17404869=dr.+Test → entry.17404869
+ *
+ * Leave empty string "" if the form doesn't have a doctor name field.
+ */
+const FORM_FIELD_IDS = {
+  "case-report":      { doctorName: "entry.17404869" },
+  "case-control":     { doctorName: "" },
+  "cohort":           { doctorName: "" },
+  "rct":              { doctorName: "" },
+  "systematic-review":{ doctorName: "" },
+  "expert-opinion":   { doctorName: "" },
+  "other":            { doctorName: "" }
+};
+
+/**
  * Guideline descriptions for each evidence type
  */
 const EBM_GUIDELINES = {

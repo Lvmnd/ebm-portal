@@ -472,7 +472,15 @@
     const container = els.gformContainer();
 
     if (link && GOOGLE_FORM_LINKS[data.evidenceType]) {
-      link.href = GOOGLE_FORM_LINKS[data.evidenceType];
+      // Build prefill URL to avoid doctors re-entering their name
+      var baseUrl = GOOGLE_FORM_LINKS[data.evidenceType];
+      var fieldIds = typeof FORM_FIELD_IDS !== 'undefined' ? FORM_FIELD_IDS[data.evidenceType] : null;
+      if (fieldIds && fieldIds.doctorName) {
+        var separator = baseUrl.indexOf('?') === -1 ? '?' : '&';
+        link.href = baseUrl + separator + fieldIds.doctorName + '=' + encodeURIComponent(data.name);
+      } else {
+        link.href = baseUrl;
+      }
       link.innerHTML = `
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
