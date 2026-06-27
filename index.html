@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Evidence Based Medicine — Submission portal for clinical case reporting. Streamlined workflow for healthcare professionals.">
+  <meta name="theme-color" content="#0d6efd">
+
+  <title>EBM Portal — Evidence Based Medicine Submission</title>
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Firebase SDKs (loaded early, used async) -->
+  <script defer src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+  <!-- =============================================
+       HEADER / NAVIGATION
+       ============================================= -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="#" class="logo" aria-label="EBM Portal Home">
+        <span class="logo-icon">EBM</span>
+        <span>EBM Portal</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#about">About EBM</a>
+        <a href="#pyramid">Levels of Evidence</a>
+        <a href="#submit" class="nav-btn">Submit Your Case</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- =============================================
+       HERO SECTION
+       ============================================= -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <span class="section-label">Evidence Based Medicine</span>
+          <h1>Bridging Clinical Expertise with <span>Best Available Evidence</span></h1>
+          <p class="hero-description">
+            A streamlined platform for healthcare professionals to submit clinical cases,
+            systematic reviews, and research studies following international reporting guidelines.
+          </p>
+          <div class="hero-actions">
+            <a href="#submit" class="btn btn-primary btn-lg">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <path d="M12 5v14M5 12h14"/>
+              </svg>
+              Submit Your Case
+            </a>
+            <a href="#about" class="btn btn-outline btn-lg">Learn More</a>
+          </div>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-card">
+            <div class="stat-number">4</div>
+            <div class="stat-label">ICMJE Authorship Criteria</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">6</div>
+            <div class="stat-label">Levels of Evidence</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">27</div>
+            <div class="stat-label">PRISMA Checklist Items</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">13</div>
+            <div class="stat-label">CARE Guideline Items</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       ABOUT EBM SECTION
+       ============================================= -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Understanding EBM</span>
+        <h2>What is Evidence Based Medicine?</h2>
+        <p>
+          Evidence Based Medicine (EBM) is the conscientious, explicit, and judicious use of
+          current best evidence in making decisions about the care of individual patients.
+        </p>
+      </div>
+
+      <div class="ebm-content">
+        <p>
+          Evidence Based Medicine integrates clinical expertise with the best available external
+          clinical evidence from systematic research. It requires the clinician to consider
+          patient values and preferences while applying scientific evidence to clinical decision-making.
+        </p>
+
+        <h3>The Three Core Pillars of EBM</h3>
+
+        <div class="ebm-components">
+          <div class="component-card">
+            <div class="component-icon">🔬</div>
+            <h4>Best Research Evidence</h4>
+            <p>Clinically relevant research from basic and clinical sciences, particularly patient-centered research</p>
+          </div>
+          <div class="component-card">
+            <div class="component-icon">👨‍⚕️</div>
+            <h4>Clinical Expertise</h4>
+            <p>The proficiency and judgment that individual clinicians acquire through clinical experience and practice</p>
+          </div>
+          <div class="component-card">
+            <div class="component-icon">❤️</div>
+            <h4>Patient Values &amp; Preferences</h4>
+            <p>The unique preferences, concerns, and expectations each patient brings to a clinical encounter</p>
+          </div>
+        </div>
+
+        <h3>Why Report Your Cases?</h3>
+        <p>
+          Reporting clinical cases and research findings according to established guidelines
+          ensures transparency, reproducibility, and impact. Each study type has specific
+          reporting standards — from CARE for case reports to PRISMA for systematic reviews —
+          that help maintain scientific integrity and enable critical appraisal by peers.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       EBM PYRAMID SECTION
+       ============================================= -->
+  <section class="section" id="pyramid">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Hierarchy of Evidence</span>
+        <h2>The Evidence Pyramid</h2>
+        <p>
+          The pyramid illustrates the hierarchy of evidence, with higher levels representing
+          study designs less susceptible to bias and providing stronger evidence for clinical decisions.
+        </p>
+      </div>
+
+      <div class="pyramid-container" role="img" aria-label="Evidence Based Medicine Pyramid showing levels of evidence from bottom: Background/Observations, Case Reports/Case Series, Case-Control Studies, Cohort Studies, Randomized Controlled Trials, to top: Systematic Reviews/Meta-Analyses">
+        <!-- Level 1: Bottom -->
+        <div class="pyramid-level pyramid-level-1">
+          <span>Expert Opinion / Background</span>
+          <span class="level-badge">Level 6</span>
+        </div>
+        <!-- Level 2 -->
+        <div class="pyramid-level pyramid-level-2">
+          <span>Case Reports / Case Series</span>
+          <span class="level-badge">Level 5</span>
+        </div>
+        <!-- Level 3 -->
+        <div class="pyramid-level pyramid-level-3">
+          <span>Case-Control Studies</span>
+          <span class="level-badge">Level 4</span>
+        </div>
+        <!-- Level 4 -->
+        <div class="pyramid-level pyramid-level-4">
+          <span>Cohort Studies</span>
+          <span class="level-badge">Level 3</span>
+        </div>
+        <!-- Level 5 -->
+        <div class="pyramid-level pyramid-level-5">
+          <span>Randomized Controlled Trials</span>
+          <span class="level-badge">Level 2</span>
+        </div>
+        <!-- Level 6: Top -->
+        <div class="pyramid-level pyramid-level-6">
+          <span>Systematic Reviews / Meta-Analyses</span>
+          <span class="level-badge">Level 1</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SUBMISSION FORM SECTION
+       ============================================= -->
+  <section class="section" id="submit">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Get Started</span>
+        <h2>Submit Your Clinical Case</h2>
+        <p>
+          Complete the steps below to submit your evidence-based case report or study.
+          After agreeing to the relevant reporting guidelines, you will receive the appropriate
+          Google Form to complete your submission.
+        </p>
+      </div>
+
+      <div class="submission-wrapper">
+        <!-- Progress Bar -->
+        <div class="form-progress" id="formProgress" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4">
+          <div class="progress-step active" data-step="1">
+            <span class="step-number">1</span>
+            <span class="step-label">Identity</span>
+          </div>
+          <span class="progress-connector" data-connector="1"></span>
+
+          <div class="progress-step" data-step="2">
+            <span class="step-number">2</span>
+            <span class="step-label">Evidence Type</span>
+          </div>
+          <span class="progress-connector" data-connector="2"></span>
+
+          <div class="progress-step" data-step="3">
+            <span class="step-number">3</span>
+            <span class="step-label">Agreements</span>
+          </div>
+          <span class="progress-connector" data-connector="3"></span>
+
+          <div class="progress-step" data-step="4">
+            <span class="step-number">4</span>
+            <span class="step-label">Submit</span>
+          </div>
+        </div>
+
+        <!-- Form Card -->
+        <div class="form-card" id="formCard">
+          <form id="submissionForm" novalidate autocomplete="on">
+
+            <!-- ===================== STEP 1: IDENTITY ===================== -->
+            <div class="form-step active" data-step="1">
+              <h3>Doctor Identity</h3>
+              <p class="step-description">Please provide your professional information so we can identify your submission.</p>
+
+              <!-- Name -->
+              <div class="form-group">
+                <label class="form-label" for="doctorName">Full Name <span class="required">*</span></label>
+                <div class="form-input-wrapper">
+                  <span class="form-prefix">dr.</span>
+                  <input type="text" id="doctorName" class="form-input"
+                         placeholder="John Doe, Sp.PD"
+                         required
+                         autocomplete="name"
+                         aria-describedby="nameHint">
+                </div>
+                <div class="form-error" id="nameError">Please enter your full name</div>
+                <div class="form-hint" id="nameHint">Enter your full name with credentials (e.g., John Doe, Sp.PD)</div>
+              </div>
+
+              <!-- Phone -->
+              <div class="form-group">
+                <label class="form-label" for="doctorPhone">Phone Number <span class="required">*</span></label>
+                <div class="form-input-wrapper">
+                  <input type="tel" id="doctorPhone" class="form-input"
+                         placeholder="81234567890"
+                         required
+                         autocomplete="tel"
+                         aria-describedby="phoneHint">
+                </div>
+                <div class="form-error" id="phoneError">Please enter a valid Indonesian phone number</div>
+                <div class="form-hint" id="phoneHint">Enter your phone number without leading zero or +62 (e.g., 81234567890). Will be linked via WhatsApp.</div>
+              </div>
+
+              <!-- Email -->
+              <div class="form-group">
+                <label class="form-label" for="doctorEmail">Email Address <span class="required">*</span></label>
+                <input type="email" id="doctorEmail" class="form-input"
+                       placeholder="dr.johndoe@hospital.com"
+                       required
+                       autocomplete="email"
+                       aria-describedby="emailHint">
+                <div class="form-error" id="emailError">Please enter a valid email address</div>
+                <div class="form-hint" id="emailHint">We will use this for correspondence regarding your submission</div>
+              </div>
+
+              <!-- Institution -->
+              <div class="form-group">
+                <label class="form-label" for="doctorInstitution">Institution / Hospital</label>
+                <input type="text" id="doctorInstitution" class="form-input"
+                       placeholder="Sardjito General Hospital"
+                       autocomplete="organization">
+                <div class="form-hint">Optional — your affiliated institution</div>
+              </div>
+
+              <div class="form-actions">
+                <span></span>
+                <button type="button" class="btn btn-next" onclick="goToStep(2)">
+                  Next — Evidence Type
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- ===================== STEP 2: EVIDENCE TYPE ===================== -->
+            <div class="form-step" data-step="2">
+              <h3>Type of Evidence</h3>
+              <p class="step-description">Select the type of evidence your submission represents. Each type has specific reporting guidelines you will need to agree to.</p>
+
+              <div class="form-group">
+                <label class="form-label">Select Evidence Type <span class="required">*</span></label>
+                <div class="option-grid" id="evidenceTypeGrid" role="radiogroup" aria-label="Evidence types">
+                  <!-- Case Report -->
+                  <label class="option-card" data-type="case-report">
+                    <input type="radio" name="evidenceType" value="case-report" required>
+                    <div class="option-check">✓</div>
+                    <div class="option-title">Case Report / Case Series</div>
+                    <div class="option-desc">Detailed report of a single patient or a small series of cases with a particular condition</div>
+                    <div class="option-guide" style="display:none;">CARE</div>
+                  </label>
+                  <!-- Case-Control -->
+                  <label class="option-card" data-type="case-control">
+                    <input type="radio" name="evidenceType" value="case-control" required>
+                    <div class="option-check">✓</div>
+                    <div class="option-title">Case-Control Study</div>
+                    <div class="option-desc">Observational study comparing patients with a condition to those without</div>
+                    <div class="option-guide" style="display:none;">STROBE</div>
+                  </label>
+                  <!-- Cohort -->
+                  <label class="option-card" data-type="cohort">
+                    <input type="radio" name="evidenceType" value="cohort" required>
+                    <div class="option-check">✓</div>
+                    <div class="option-title">Cohort Study</div>
+                    <div class="option-desc">Longitudinal study following a group over time to observe outcomes</div>
+                    <div class="option-guide" style="display:none;">STROBE</div>
+                  </label>
+                  <!-- RCT -->
+                  <label class="option-card" data-type="rct">
+                    <input type="radio" name="evidenceType" value="rct" required>
+                    <div class="option-check">✓</div>
+                    <div class="option-title">Randomized Controlled Trial</div>
+                    <div class="option-desc">Experimental study where participants are randomly assigned to interventions</div>
+                    <div class="option-guide" style="display:none;">CONSORT</div>
+                  </label>
+                  <!-- Systematic Review -->
+                  <label class="option-card" data-type="systematic-review">
+                    <input type="radio" name="evidenceType" value="systematic-review" required>
+                    <div class="option-check">✓</div>
+                    <div class="option-title">Systematic Review / Meta-Analysis</div>
+                    <div class="option-desc">Comprehensive synthesis of existing research following a structured methodology</div>
+                    <div class="option-guide" style="display:none;">PRISMA</div>
+                  </label>
+                  <!-- Expert Opinion -->
+                  <label class="option-card" data-type="expert-opinion">
+                    <input type="radio" name="evidenceType" value="expert-opinion" required>
+                    <div class="option-check">✓</div>
+                    <div class="option-title">Expert Opinion</div>
+                    <div class="option-desc">Clinical perspective or narrative review based on extensive professional experience</div>
+                    <div class="option-guide" style="display:none;">Expert Opinion</div>
+                  </label>
+                  <!-- Other -->
+                  <label class="option-card" data-type="other">
+                    <input type="radio" name="evidenceType" value="other" required>
+                    <div class="option-check">✓</div>
+                    <div class="option-title">Other</div>
+                    <div class="option-desc">Other type of scholarly work or clinical report</div>
+                    <div class="option-guide" style="display:none;">—</div>
+                  </label>
+                </div>
+                <div class="form-error" id="typeError">Please select an evidence type</div>
+              </div>
+
+              <!-- Other type description -->
+              <div class="form-group" id="otherTypeGroup" style="display:none;">
+                <label class="form-label" for="otherTypeDesc">Please describe your submission type</label>
+                <input type="text" id="otherTypeDesc" class="form-input" placeholder="e.g., Qualitative Study, Economic Analysis">
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn btn-prev" onclick="goToStep(1)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                  </svg>
+                  Back
+                </button>
+                <button type="button" class="btn btn-next" onclick="goToStep(3)">
+                  Next — Agreements
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- ===================== STEP 3: AGREEMENTS ===================== -->
+            <div class="form-step" data-step="3">
+              <h3>Author Agreements &amp; Guidelines</h3>
+              <p class="step-description">
+                Before proceeding, please confirm that your submission adheres to international
+                reporting standards and authorship criteria.
+              </p>
+
+              <!-- ICMJE Authorship -->
+              <div class="agreement-list">
+                <label class="agreement-item" id="icmjeAgreement">
+                  <input type="checkbox" required aria-label="ICMJE Authorship criteria">
+                  <div class="agreement-content">
+                    <div class="agreement-title">ICMJE Authorship Criteria</div>
+                    <div class="agreement-text">
+                      I confirm that all authors listed in this submission meet the four ICMJE authorship criteria:
+                      (1) substantial contributions to conception or design; (2) drafting or critical revision;
+                      (3) final approval of the version to be published; (4) agreement to be accountable for all
+                      aspects of the work.
+                    </div>
+                    <a href="https://www.icmje.org/recommendations/browse/roles-and-responsibilities/defining-the-role-of-authors-and-contributors.html"
+                       target="_blank" rel="noopener noreferrer" class="agreement-link">
+                      View ICMJE Criteria →
+                    </a>
+                  </div>
+                </label>
+
+                <label class="agreement-item" id="originalityAgreement">
+                  <input type="checkbox" required aria-label="Originality and ethics">
+                  <div class="agreement-content">
+                    <div class="agreement-title">Originality &amp; Ethical Compliance</div>
+                    <div class="agreement-text">
+                      I confirm that this work is original, has not been published elsewhere, is not under
+                      consideration by another journal, and has been conducted in accordance with ethical
+                      standards including informed consent and institutional review board approval where applicable.
+                    </div>
+                  </div>
+                </label>
+
+                <label class="agreement-item" id="disclosureAgreement">
+                  <input type="checkbox" required aria-label="Conflicts of interest disclosure">
+                  <div class="agreement-content">
+                    <div class="agreement-title">Conflict of Interest Disclosure</div>
+                    <div class="agreement-text">
+                      I confirm that all potential conflicts of interest, financial or otherwise, have been
+                      disclosed and will be included in the submission.
+                    </div>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Specific Guideline Agreement (dynamic based on type) -->
+              <div id="guidelineSpecificSection">
+                <!-- Content populated by JS based on selected evidence type -->
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn btn-prev" onclick="goToStep(2)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                  </svg>
+                  Back
+                </button>
+                <button type="button" class="btn btn-submit" id="submitBtn" onclick="handleSubmit()">
+                  <span id="submitBtnText">Submit &amp; Get Form Link</span>
+                  <span id="submitSpinner" class="spinner" style="display:none;"></span>
+                </button>
+              </div>
+            </div>
+
+            <!-- ===================== STEP 4: RESULT ===================== -->
+            <div class="form-step" data-step="4">
+              <div class="result-card">
+                <div class="result-icon">✅</div>
+                <h3>Your Submission Form is Ready!</h3>
+                <p>
+                  Thank you for completing the pre-submission requirements.
+                  Please click the button below to access the Google Form for your
+                  evidence type and complete your submission.
+                </p>
+
+                <!-- Google Form link will be populated here -->
+                <div id="gformContainer">
+                  <a href="#" id="gformLink" target="_blank" rel="noopener noreferrer" class="gform-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                      <polyline points="14 2 14 8 20 8"/>
+                      <line x1="16" y1="13" x2="8" y2="13"/>
+                      <line x1="16" y1="17" x2="8" y2="17"/>
+                    </svg>
+                    Open Google Form
+                  </a>
+                </div>
+
+                <div style="margin-top: var(--space-xl); padding-top: var(--space-lg); border-top: 1px solid var(--gray-200);">
+                  <p style="font-size: 0.8125rem; color: var(--gray-500); margin-bottom: var(--space-sm);">
+                    A confirmation has been recorded. You will be contacted by our team if further information is needed.
+                  </p>
+                  <a href="#hero" class="btn btn-outline btn-sm">Submit Another Case</a>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       FOOTER
+       ============================================= -->
+  <footer class="footer">
+    <div class="container">
+      <p>
+        &copy; <span id="currentYear">2026</span> Evidence Based Medicine Portal.
+        Built for healthcare professionals committed to evidence-based practice.
+      </p>
+    </div>
+  </footer>
+
+  <!-- =============================================
+       TOAST NOTIFICATIONS CONTAINER
+       ============================================= -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- =============================================
+       JAVASCRIPT
+       ============================================= -->
+  <script src="js/config.js"></script>
+  <script src="js/submission.js"></script>
+</body>
+</html>

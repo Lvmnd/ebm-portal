@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EBM Portal — Admin Dashboard. Manage and track clinical submissions.">
+  <meta name="theme-color" content="#0d6efd">
+
+  <title>Admin — EBM Portal</title>
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Firebase SDKs -->
+  <script defer src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+</head>
+<body class="admin-page">
+
+  <!-- =============================================
+       HEADER
+       ============================================= -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="Back to EBM Portal">
+        <span class="logo-icon">EBM</span>
+        <span>Admin Panel</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">← Back to Portal</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- =============================================
+       LOGIN VIEW
+       ============================================= -->
+  <div class="login-container" id="loginView">
+    <div class="login-card">
+      <h2>Admin Login</h2>
+      <p class="login-subtitle">Sign in to manage submissions</p>
+
+      <div class="login-error" id="loginError"></div>
+
+      <form id="loginForm" onsubmit="return handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label" for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" class="form-input"
+                 placeholder="admin@example.com"
+                 required
+                 autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" class="form-input"
+                 placeholder="••••••••"
+                 required
+                 autocomplete="current-password">
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="loginBtn" style="width:100%;justify-content:center;">
+          <span id="loginBtnText">Sign In</span>
+          <span id="loginSpinner" class="spinner" style="display:none;"></span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- =============================================
+       DASHBOARD VIEW (hidden until login)
+       ============================================= -->
+  <div class="dashboard" id="dashboardView" style="display:none;">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+      <h2>Submissions Dashboard</h2>
+      <div class="admin-info">
+        <span class="admin-email" id="adminEmail"></span>
+        <button class="btn btn-logout" onclick="handleLogout()">Sign Out</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="dashboard-stats" id="statsContainer">
+      <div class="stat-box">
+        <div class="stat-num" id="statTotal">0</div>
+        <div class="stat-lbl">Total Submissions</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="statPending">0</div>
+        <div class="stat-lbl">Pending Review</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="statContacted">0</div>
+        <div class="stat-lbl">Contacted</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="statToday">0</div>
+        <div class="stat-lbl">Submitted Today</div>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="dashboard-toolbar">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="form-input" id="searchInput"
+               placeholder="Search by name, email, or phone..."
+               oninput="handleSearch()">
+      </div>
+      <select class="form-input filter-select" id="statusFilter" onchange="handleFilter()">
+        <option value="all">All Status</option>
+        <option value="pending">Pending</option>
+        <option value="contacted">Contacted</option>
+        <option value="review">In Review</option>
+      </select>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container" id="tableContainer">
+      <div class="loading-state" id="tableLoading">
+        <div class="spinner spinner-dark" style="margin:0 auto 12px;"></div>
+        <p style="color:var(--gray-500);font-size:0.875rem;">Loading submissions...</p>
+      </div>
+
+      <div class="empty-state" id="tableEmpty" style="display:none;">
+        <div class="empty-icon">📋</div>
+        <h4>No Submissions Yet</h4>
+        <p>When doctors submit their cases, they will appear here.</p>
+      </div>
+
+      <div id="tableWrapper" style="display:none;">
+        <table class="data-table" id="submissionsTable">
+          <thead>
+            <tr>
+              <th>Doctor</th>
+              <th>Contact</th>
+              <th>Evidence Type</th>
+              <th>Guideline</th>
+              <th>Submitted</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <!-- Rows populated by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================
+       TOAST NOTIFICATIONS
+       ============================================= -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- =============================================
+       JAVASCRIPT
+       ============================================= -->
+  <script src="js/config.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
